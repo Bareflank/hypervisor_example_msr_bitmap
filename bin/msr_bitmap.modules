@@ -1,0 +1,26 @@
+################################################################################
+# Default Modules                                                              #
+################################################################################
+
+# Default Modules
+#
+# Note: The existing vcpu_factory module is commented out as we will be
+# providing our own.
+../../../bfvmm/bin/cross/libmemory_manager.so
+../../../bfvmm/bin/cross/libentry.so
+../../../bfvmm/bin/cross/libserial.so
+../../../bfvmm/bin/cross/libdebug_ring.so
+../../../bfvmm/bin/cross/libintrinsics.so
+../../../bfvmm/bin/cross/libvmxon.so
+../../../bfvmm/bin/cross/libvmcs.so
+../../../bfvmm/bin/cross/libvcpu.so
+#../../../bfvmm/bin/cross/libvcpu_factory.so
+../../../bfvmm/bin/cross/libexit_handler.so
+../../../bfvmm/bin/cross/libmisc.so
+../../../bfvmm/bin/cross/libc++.so
+
+# Custom Modules
+#
+# Note: This is where we provide our own vcpu_factory.
+../../../hypervisor_example_msr_bitmap/bin/cross/libvcpu_factory_msr_bitmap.so
+../../../hypervisor_example_msr_bitmap/bin/cross/libvmcs_intel_x64_msr_bitmap.so
