@@ -24,10 +24,9 @@
 ################################################################################
 
 PARENT_SUBDIRS += vcpu_factory_msr_bitmap
-PARENT_SUBDIRS += vmcs_msr_bitmap
 
 ################################################################################
 # Common
 ################################################################################
 
-include ../common/common_subdir.mk
+include %HYPER_ABS%/common/common_subdir.mk
