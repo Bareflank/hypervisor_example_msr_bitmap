@@ -1,50 +1,46 @@
-# Bareflank Hypervisor MSR Bitmap Example
+# Bareflank Hypervisor Example
 
 ## Description
 
-This example demonstrates how to extend the Bareflank hypervisor to use
-Intel's MSR Bitmaps to increase performance. For more information on how
-Bareflank extensions work, please see the following:
+This example demonstrates how to extend the Bareflank hypervisor to utilize the MSR bitmap feature of Intel virtualization. For more information on how Bareflank extensions work, please see the following:
 
 [API Documentation](http://bareflank.github.io/hypervisor/html/)
 
 ## Compilation / Usage
 
-To setup our extension, we can either clone the extension into the Bareflank
-root folder and run make, or we can use the configure script to create an
-out-of-tree build environment that has our extension setup for easy development.
-Note that using the later approach, we can have more than one build
-environment (the following assumes this is running on Linux).
+First, you must clone the repo into your existing Bareflank repo. To see instructions on how to setup Bareflank, please see the following:
+
+[Bareflank Hypervisor](https://github.com/Bareflank/hypervisor)
+
+At the moment, out-of-tree compilation is not supported.
 
 ```
-cd ~/
-git clone https://github.com/Bareflank/hypervisor.git
-git clone https://github.com/Bareflank/hypervisor_example_msr_bitmap.git
 cd ~/hypervisor
+git clone https://github.com/Bareflank/hypervisor_example_msr_bitmap
+```
 
-./tools/scripts/setup-<xxx>.sh --no-configure
-sudo reboot
+Once the example repo is cloned, you can now build the example. Bareflank automatically looks for the examples, or any folder that starts with "src_", and builds these folders along with Bareflank itself. 
 
-cd ~/
-mkdir build
-cd ~/build
-
-~/hypervisor/configure -m ~/hypervisor_example_msr_bitmap/bin/msr_bitmap.modules -e ~/hypervisor_example_msr_bitmap
-
+```
 make
-make unittest
 ```
 
-To test out our extended version of Bareflank, all we need to do is run the
-make shortcuts as usual:
+Finally, you can run the example. This can be done by running bfm manually, and providing the path to your custom modules list:
 
 ```
-make linux_load
-make quick
+pushd bfm/bin/native
+sudo LD_LIBRARY_PATH=. ./bfm load hypervisor_example_msr_bitmap/bin/msr_bitmap.modules
+sudo LD_LIBRARY_PATH=. ./bfm start
+sudo LD_LIBRARY_PATH=. ./bfm status
+sudo LD_LIBRARY_PATH=. ./bfm dump
+popd
+```
 
+or you can use the shortcuts:
+
+```
+make load MODULES=hypervisor_example_msr_bitmap/bin/msr_bitmap.modules
+make start
 make status
 make dump
-
-make stop
-make linux_unload
 ```

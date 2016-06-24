@@ -23,7 +23,7 @@
 # Target Information
 ################################################################################
 
-TARGET_NAME:=vcpu_factory_msr_bitmap
+TARGET_NAME:=vmcs_intel_x64_msr_bitmap
 TARGET_TYPE:=lib
 TARGET_COMPILER:=cross
 
@@ -42,18 +42,20 @@ CROSS_DEFINES+=
 # Output
 ################################################################################
 
-CROSS_OBJDIR+=%BUILD_REL%/.build
-CROSS_OUTDIR+=%BUILD_REL%/../bin
+CROSS_OBJDIR:=.build
+CROSS_OUTDIR:=../bin
 
 ################################################################################
 # Sources
 ################################################################################
 
-SOURCES+=vcpu_factory_msr_bitmap.cpp
+SOURCES+=vmcs_intel_x64_msr_bitmap.cpp
+SOURCES+=bitmap.cpp
 
-INCLUDE_PATHS+=../../
-INCLUDE_PATHS+=%HYPER_ABS%/include/
-INCLUDE_PATHS+=%HYPER_ABS%/bfvmm/include/
+INCLUDE_PATHS+=./
+INCLUDE_PATHS+=../
+INCLUDE_PATHS+=../../include/
+INCLUDE_PATHS+=../../bfvmm/include/
 
 LIBS+=
 
@@ -82,4 +84,4 @@ LINUX_LIBRARY_PATHS+=
 # Common
 ################################################################################
 
-include %HYPER_ABS%/common/common_target.mk
+include ../../common/common_target.mk
