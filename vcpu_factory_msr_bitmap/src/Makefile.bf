@@ -1,5 +1,5 @@
 #
-# Bareflank Hypervisor Examples
+# Bareflank Hypervisor
 #
 # Copyright (C) 2015 Assured Information Security, Inc.
 # Author: Rian Quinn        <quinnr@ainfosec.com>
@@ -23,13 +23,25 @@
 # Target Information
 ################################################################################
 
-TARGET_NAME:=vmcs_intel_x64_msr_bitmap
+TARGET_NAME:=vcpu_factory_msr_bitmap
 TARGET_TYPE:=lib
-TARGET_COMPILER:=cross
+
+ifeq ($(shell uname -s), Linux)
+    TARGET_COMPILER:=both
+else
+    TARGET_COMPILER:=cross
+endif
 
 ################################################################################
 # Compiler Flags
 ################################################################################
+
+NATIVE_CCFLAGS+=
+NATIVE_CXXFLAGS+=
+NATIVE_ASMFLAGS+=
+NATIVE_LDFLAGS+=
+NATIVE_ARFLAGS+=
+NATIVE_DEFINES+=
 
 CROSS_CCFLAGS+=
 CROSS_CXXFLAGS+=
@@ -42,20 +54,21 @@ CROSS_DEFINES+=
 # Output
 ################################################################################
 
-CROSS_OBJDIR:=.build
-CROSS_OUTDIR:=../bin
+CROSS_OBJDIR+=%BUILD_REL%/.build
+CROSS_OUTDIR+=%BUILD_REL%/../bin
+
+NATIVE_OBJDIR+=%BUILD_REL%/.build
+NATIVE_OUTDIR+=%BUILD_REL%/../bin
 
 ################################################################################
 # Sources
 ################################################################################
 
-SOURCES+=vmcs_intel_x64_msr_bitmap.cpp
-SOURCES+=bitmap.cpp
+SOURCES+=vcpu_factory_msr_bitmap.cpp
 
-INCLUDE_PATHS+=./
-INCLUDE_PATHS+=../
-INCLUDE_PATHS+=../../include/
-INCLUDE_PATHS+=../../bfvmm/include/
+INCLUDE_PATHS+=../../
+INCLUDE_PATHS+=%HYPER_ABS%/include/
+INCLUDE_PATHS+=%HYPER_ABS%/bfvmm/include/
 
 LIBS+=
 
@@ -84,4 +97,4 @@ LINUX_LIBRARY_PATHS+=
 # Common
 ################################################################################
 
-include ../../common/common_target.mk
+include %HYPER_ABS%/common/common_target.mk
