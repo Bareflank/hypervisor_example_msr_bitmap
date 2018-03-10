@@ -1,9 +1,6 @@
 #
-# Bareflank Hypervisor Examples
-#
+# Bareflank Hypervisor
 # Copyright (C) 2015 Assured Information Security, Inc.
-# Author: Rian Quinn        <quinnr@ainfosec.com>
-# Author: Brendan Kerrigan  <kerriganb@ainfosec.com>
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -19,14 +16,7 @@
 # License along with this library; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
-################################################################################
-# Subdirs
-################################################################################
-
-SUBDIRS += src
-
-################################################################################
-# Common
-################################################################################
-
-include %HYPER_ABS%/common/common_subdir.mk
+vmm_extension(
+    vpid
+    SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/src
+)
