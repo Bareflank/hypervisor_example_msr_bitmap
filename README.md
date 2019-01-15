@@ -1,10 +1,10 @@
-# Bareflank Hypervisor MST Bitmap Example
+# Bareflank Hypervisor MSR Bitmap Example
 
 ## Description
 
-This example demonstrates how to extend the Bareflank hypervisor to use
-Intel's MSR Bitmap to increase performance. For more information on how
-Bareflank extensions work, please see the following:
+This example demonstrates how to extend the Bareflank hypervisor to
+enable MSR bitmaps. For more information on how Bareflank
+extensions work, please see the following:
 
 [API Documentation](http://bareflank.github.io/hypervisor/html/)
 
@@ -13,32 +13,30 @@ Bareflank extensions work, please see the following:
 To setup our extension, run the following (assuming Linux):
 
 ```
-cd ~/
-git clone https://github.com/Bareflank/hypervisor.git
+git clone https://github.com/Bareflank/hypervisor
 git clone https://github.com/Bareflank/hypervisor_example_msr_bitmap.git
-cd ~/hypervisor
-
-./tools/scripts/setup-<xxx>.sh --no-configure
-sudo reboot
-
-cd ~/
-mkdir build
-cd ~/build
-
-~/hypervisor/configure -m ~/hypervisor_example_msr_bitmap/bin/msr_bitmap.modules -e ~/hypervisor_example_msr_bitmap
-make
+mkdir build; cd build
+cmake ../hypervisor -DDEFAULT_VMM=example_vmm -DEXTENSION=../hypervisor_example_msr_bitmap
+make -j<# cores + 1>
 ```
 
-To test out our extended version of Bareflank, all we need to do is run the
-make shortcuts as usual:
+To test out our extended version of Bareflank, run the following commands:
 
 ```
-make driver_load
+make driver_quick
 make quick
+```
 
+to get status information, use the following:
+
+```
 make status
 make dump
+```
 
-make stop
+to reverse this:
+
+```
+make unload
 make driver_unload
 ```
